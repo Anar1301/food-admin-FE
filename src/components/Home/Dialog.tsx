@@ -29,6 +29,19 @@ export function DialogDemo({
   getDishes: Function;
   id: string;
 }) {
+  const createCategoryHandler2 = async () => {
+    await fetch("http://localhost:4000/api/turshih", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+      }),
+    });
+    await getCategories();
+  };
   const [categories, setCategories] = useState<Category[]>([]);
   type Category = {
     _id: string;
@@ -45,6 +58,7 @@ export function DialogDemo({
   };
   useEffect(() => {
     getCategories();
+    createCategoryHandler2();
   }, []);
 
   const [pev, setPev] = useState("");

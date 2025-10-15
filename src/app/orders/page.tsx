@@ -1,7 +1,7 @@
 import Adminlayout from "@/components/Home/Adminlayout";
 import { Calendarinput } from "@/components/Home/Datainput";
 import { DialogCategory2 } from "@/components/Home/Ordercategory";
-import { DataTableDemo } from "@/components/Home/Ordertable";
+import { DataTableDemo } from "../../components/Home/Ordertable";
 
 import React from "react";
 
