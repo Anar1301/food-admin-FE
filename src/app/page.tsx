@@ -1,6 +1,5 @@
 import Alldishescategory from "@/components/Home/Alldeshescategory";
 import Adminlayout from "@/components/Home/Adminlayout";
-import { CreateFoodDialog } from "@/components/Home/Senseiimage";
 
 const AdminHomepage = () => {
   return (
