@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 
 export function DialogCategory() {
   const [newName, setNewName] = useState("");

@@ -1,7 +1,6 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { DialogCategory } from "./Dialogcategory";
 import Ordercomp from "./Ordercomp";
 import { Button } from "../ui/button";
 import {
@@ -17,6 +16,35 @@ import { Input } from "../ui/input";
 
 const Alldishescategory = () => {
   const [newName, setNewName] = useState("");
+  type categoryidType = {
+    _id: string;
+    name: string;
+  };
+  type Dish = {
+    name: string;
+    ingredients: string;
+    price: number;
+    category: string;
+    image: string;
+    _id: string;
+    categorid: categoryidType;
+  };
+
+  const [dishes, setDishes] = useState<Dish[]>([]);
+
+  const getDishes = async () => {
+    const result = await fetch("http://localhost:4000/api/food");
+    const responseData = await result.json();
+
+    const { data } = responseData;
+    console.log({ responseData });
+
+    setDishes(data);
+  };
+
+  useEffect(() => {
+    getDishes();
+  }, []);
 
   const createCategoryHandler = async () => {
     await fetch("http://localhost:4000/api/categories", {
@@ -32,6 +60,10 @@ const Alldishescategory = () => {
     await getCategories();
   };
   const [categories, setCategories] = useState<Category[]>([]);
+  const [filtered, setFiltered] = useState<Category[]>([]);
+  const [status, setStatus] = useState<boolean>(false);
+  const [red, setRed] = useState<string>("ulaan");
+
   type Category = {
     _id: string;
     name: string;
@@ -42,6 +74,7 @@ const Alldishescategory = () => {
     const responseData = await result.json();
 
     const { data } = responseData;
+    console.log({ responseData });
 
     setCategories(data);
   };
@@ -50,19 +83,26 @@ const Alldishescategory = () => {
   }, []);
 
   const Deletebutton = async (id: string) => {
-    confirm("Are you sure ?");
-    await fetch("http://localhost:4000/api/categories/delete", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-      }),
-    });
-    await getCategories();
+    if (confirm("Are you sure ?")) {
+      await fetch("http://localhost:4000/api/categories/delete", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: id,
+        }),
+      });
+      await getCategories();
+    }
   };
+  function filteredcat(categorid: string) {
+    const filteredcategory = categories.filter((e) => e._id === categorid);
+    setFiltered(filteredcategory);
+
+    setStatus(true);
+  }
 
   return (
     <div>
@@ -73,14 +113,33 @@ const Alldishescategory = () => {
           </div>
 
           <div className="mt-[16px] flex gap-2">
+            <Button
+              className={
+                `bg-white text-black rounded-full border-1 border-black ` +
+                `${status ? " !border-black" : " !border-red-400"}`
+              }
+              onClick={() => (setFiltered(categories), setStatus(!true))}
+            >
+              All dishes
+              <p className="bg-black text-white rounded-full  px-2">
+                {dishes.length}
+              </p>
+            </Button>
             {categories.map((category, index) => (
               <Button
-                className="bg-white text-black rounded-full border-1 border-black "
+                onClick={() => (filteredcat(category._id), setStatus(!false))}
+                className={
+                  `bg-white text-black rounded-full border-1 border-black ` +
+                  `${red === "ulaan" ? " !border-red-500" : " !border-black"}`
+                }
                 key={index}
               >
                 {category.name}
                 <p className="bg-black text-white rounded-full  px-2">
-                  {categories.length}
+                  {
+                    dishes.filter((dish) => dish.categorid._id === category._id)
+                      .length
+                  }
                 </p>
                 <p
                   className="bg-red-400 rounded-full h-7 w-7 items-center flex justify-center"
@@ -132,14 +191,37 @@ const Alldishescategory = () => {
             </Dialog>
           </div>
         </div>
+
+        {status ? (
+          <div>
+            {filtered.map((category) => (
+              <Ordercomp
+                dishes2={dishes.filter(
+                  (dish) => dish.categorid._id === category._id
+                )}
+                getCategories={getCategories}
+                key={category.name}
+                title={category.name}
+                _id={category._id}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>
+            {categories.map((category) => (
+              <Ordercomp
+                dishes2={dishes.filter(
+                  (dish) => dish.categorid._id === category._id
+                )}
+                getCategories={getCategories}
+                key={category.name}
+                title={category.name}
+                _id={category._id}
+              />
+            ))}
+          </div>
+        )}
       </div>
-      {categories.map((category: { name: string; _id: string }) => (
-        <Ordercomp
-          key={category.name}
-          title={category.name}
-          _id={category._id}
-        ></Ordercomp>
-      ))}
     </div>
   );
 };

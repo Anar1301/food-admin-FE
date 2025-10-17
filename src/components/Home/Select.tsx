@@ -9,7 +9,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "@/components/ui/select";
 import { useEffect, useState } from "react";
 
 export function SelectDemo({ title }: { title: string }) {
@@ -30,8 +30,9 @@ export function SelectDemo({ title }: { title: string }) {
   useEffect(() => {
     getCategories();
   }, []);
+  const handleonselect = (value: string) => {};
   return (
-    <Select>
+    <Select onValueChange={handleonselect}>
       <SelectTrigger className="w-[288px]">
         <SelectValue placeholder={title} />
       </SelectTrigger>
