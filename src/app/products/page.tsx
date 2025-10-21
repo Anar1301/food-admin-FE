@@ -108,7 +108,12 @@ export default function ProductPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <CreateFoodDialog />
+        <CreateFoodDialog
+          categoryId={""}
+          refetchFoods={function (): Promise<void> {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </div>
     </AdminLayout>
   );
