@@ -3,14 +3,15 @@
 import * as React from "react";
 import { CalendarIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/_components/ui/button";
+import { Calendar } from "@/_components/ui/calendar";
+import { Input } from "@/_components/ui/input";
+import { Label } from "@/_components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/_components/ui/popover";
 
 function formatDate(date: Date | undefined) {
   if (!date) {

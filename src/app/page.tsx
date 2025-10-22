@@ -1,5 +1,5 @@
-import Alldishescategory from "@/components/Home/Alldeshescategory";
-import Adminlayout from "@/components/Home/Adminlayout";
+import Alldishescategory from "@/_components/Home/Alldeshescategory";
+import Adminlayout from "@/_components/Home/Adminlayout";
 
 const AdminHomepage = () => {
   return (

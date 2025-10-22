@@ -28,7 +28,18 @@ const Ordercomp = ({
   getCategories: Function;
   dishes2: Dish[];
 }) => {
-  console.log(dishes2);
+  const [dishes, setDishes] = useState<Dish[]>([]);
+  const getDishes = async () => {
+    const result = await fetch("http://localhost:4000/api/food");
+    const responseData = await result.json();
+
+    const { data } = responseData;
+
+    setDishes(data);
+  };
+  useEffect(() => {
+    getDishes();
+  }, []);
   const Deletefoodinfo = async (id: string) => {
     confirm("Are you sure ?");
     await fetch("http://localhost:4000/api/food/delete", {
@@ -41,7 +52,9 @@ const Ordercomp = ({
         _id: id,
       }),
     });
+    await getDishes();
   };
+  console.log("category", dishes);
   return (
     <div>
       <div className="bg-[#FFFFFF] mt-[24px] ml-[24px] max-w-[1440px] ">
@@ -49,10 +62,16 @@ const Ordercomp = ({
           {title} ({dishes2.length})
         </div>
         <div className="flex gap-7 flex-wrap w-[1440px] ml-[24px] ">
-          <DialogDemo categorid={_id} title={title} />
+          <DialogDemo
+            refetchFoods={() => getDishes()}
+            categorid={_id}
+            title={title}
+          ></DialogDemo>
 
           {dishes2.map((dish, index) => (
             <Dishinfo
+              refetchFoods={() => getDishes()}
+              getDishes={getDishes}
               key={index}
               Deletefoodinfo={Deletefoodinfo}
               title={title}

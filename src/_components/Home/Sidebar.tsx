@@ -36,7 +36,6 @@ const Sidebar = ({
         </Link>
 
         <Link href="/orders">
-          {" "}
           <Button className={className}>
             <FaTruck /> Orders
           </Button>

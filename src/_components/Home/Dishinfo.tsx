@@ -26,8 +26,10 @@ import {
 } from "../ui/select";
 
 const Dishinfo = ({
+  refetchFoods,
   categorname,
   id,
+  getDishes,
   Deletefoodinfo,
   name,
   image,
@@ -36,6 +38,7 @@ const Dishinfo = ({
   title,
   _id,
 }: {
+  refetchFoods: () => Promise<void>;
   categorname: string;
   name: string;
   image: string;
@@ -44,6 +47,7 @@ const Dishinfo = ({
   title: string;
   _id: string;
   Deletefoodinfo: Function;
+  getDishes: Function;
   id: string;
 }) => {
   const [pev, setPev] = useState("");
@@ -84,6 +88,7 @@ const Dishinfo = ({
       },
       body: newform,
     });
+    await getDishes();
     alert("Food Edited successfully!");
   };
   const [categories, setCategories] = useState<Category[]>([]);
@@ -129,13 +134,13 @@ const Dishinfo = ({
 
             <DialogContent className="sm:max-w-[472px]">
               <DialogHeader>
-                <DialogTitle>Foods info</DialogTitle>
+                <DialogTitle>Dishes info</DialogTitle>
               </DialogHeader>
               <div className="grid gap-4">
                 <div className="grid gap-3 ">
                   <div className="flex gap-5 ">
                     <Label htmlFor="name-1" className="w-[100px]">
-                      Food Name
+                      Dish Name
                     </Label>
                     <Input
                       id="name"
@@ -148,7 +153,7 @@ const Dishinfo = ({
                 <div className="grid gap-5">
                   <div className="flex gap-8 ">
                     <Label htmlFor="name-1" className="w-[100px]">
-                      Food Category
+                      Dish Category
                     </Label>
                     <Select onValueChange={(value) => handleonselect(value)}>
                       <SelectTrigger className="w-[288px]">

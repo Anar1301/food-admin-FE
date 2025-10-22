@@ -9,7 +9,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/_components/ui/select";
 import { useEffect, useState } from "react";
 
 export function SelectDemo({ title }: { title: string }) {

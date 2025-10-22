@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/_components/ui/button";
 
 import { FaTrashCan } from "react-icons/fa6";
 import { GrGallery } from "react-icons/gr";
@@ -11,9 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/_components/ui/dialog";
+import { Input } from "@/_components/ui/input";
+import { Label } from "@/_components/ui/label";
 
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 
@@ -21,10 +21,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
 
 export function DialogDemo({
+  refetchFoods,
   title,
   categorid,
 }: {
   title: string | undefined;
+  refetchFoods: () => Promise<void>;
+
   categorid: string;
 }) {
   const [pev, setPev] = useState("");
@@ -55,13 +58,12 @@ export function DialogDemo({
         mode: "no-cors",
         body: form,
       });
-      console.log(response);
+      await refetchFoods();
       alert("Food created successfully!");
       setName("");
       setPrice(0);
       setImage(undefined);
       setIngredients("");
-      // setCategory("");
     } catch (error) {
       console.log(error);
       alert("Failed to create food");
