@@ -80,14 +80,17 @@ const Dishinfo = ({
 
   const Editfood = async () => {
     console.log(name2, price2, categorid, ingredients2);
-    await fetch("http://localhost:4000/api/food/edit", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: newform,
-    });
+    await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/food/edit",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: newform,
+      }
+    );
     await getDishes();
     alert("Food Edited successfully!");
   };
@@ -98,7 +101,9 @@ const Dishinfo = ({
   };
 
   const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
+    const result = await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories"
+    );
     const responseData = await result.json();
 
     const { data } = responseData;

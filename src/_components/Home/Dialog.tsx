@@ -53,11 +53,14 @@ export function DialogDemo({
     // form.append("category", category);
 
     try {
-      const response = await fetch("http://localhost:4000/api/food", {
-        method: "POST",
-        mode: "no-cors",
-        body: form,
-      });
+      const response = await fetch(
+        "https://food-delivery-frontend-client-n86m.vercel.app/api/food",
+        {
+          method: "POST",
+          mode: "no-cors",
+          body: form,
+        }
+      );
       await refetchFoods();
       alert("Food created successfully!");
       setName("");

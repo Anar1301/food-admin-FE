@@ -30,7 +30,9 @@ const Ordercomp = ({
 }) => {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const getDishes = async () => {
-    const result = await fetch("http://localhost:4000/api/food");
+    const result = await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/food"
+    );
     const responseData = await result.json();
 
     const { data } = responseData;
@@ -42,16 +44,19 @@ const Ordercomp = ({
   }, []);
   const Deletefoodinfo = async (id: string) => {
     confirm("Are you sure ?");
-    await fetch("http://localhost:4000/api/food/delete", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-      }),
-    });
+    await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/food/delete",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: id,
+        }),
+      }
+    );
     await getDishes();
   };
   console.log("category", dishes);

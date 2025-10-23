@@ -32,7 +32,10 @@ const Alldishescategory = () => {
 
   const [dishes, setDishes] = useState<Dish[]>([]);
   const getDishes = async () => {
-    const result = await fetch("http://localhost:4000/api/food");
+    const result = await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/food"
+    );
+
     const responseData = await result.json();
 
     const { data } = responseData;
@@ -45,16 +48,19 @@ const Alldishescategory = () => {
   }, []);
 
   const createCategoryHandler = async () => {
-    await fetch("http://localhost:4000/api/categories", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: newName,
-      }),
-    });
+    await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: newName,
+        }),
+      }
+    );
     await getCategories();
   };
   const [categories, setCategories] = useState<Category[]>([]);
@@ -68,7 +74,9 @@ const Alldishescategory = () => {
   };
 
   const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
+    const result = await fetch(
+      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories"
+    );
     const responseData = await result.json();
 
     const { data } = responseData;
@@ -82,16 +90,19 @@ const Alldishescategory = () => {
 
   const Deletebutton = async (id: string) => {
     if (confirm("Are you sure ?")) {
-      await fetch("http://localhost:4000/api/categories/delete", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: id,
-        }),
-      });
+      await fetch(
+        "https://food-delivery-frontend-client-n86m.vercel.app/api/categories/delete",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            _id: id,
+          }),
+        }
+      );
       await getCategories();
     }
   };
