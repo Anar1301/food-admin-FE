@@ -98,7 +98,6 @@ export function DialogDemo({
             <div className="flex flex-col items-center">
               <img
                 src="/icon.png
-
             "
                 height={36}
                 width={36}

@@ -10,29 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/_components/ui/select";
-import { useEffect, useState } from "react";
+
+import useFood from "../../Service/use-hook";
 
 export function SelectDemo({ title }: { title: string }) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  type Category = {
-    _id: string;
-    name: string;
-  };
+  const { categories } = useFood();
 
-  const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
-    const responseData = await result.json();
-
-    const { data } = responseData;
-
-    setCategories(data);
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
-  const handleonselect = (value: string) => {};
   return (
-    <Select onValueChange={handleonselect}>
+    <Select>
       <SelectTrigger className="w-[288px]">
         <SelectValue placeholder={title} />
       </SelectTrigger>

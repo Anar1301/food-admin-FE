@@ -1,7 +1,10 @@
 import Alldishescategory from "@/_components/Home/Alldeshescategory";
 import Adminlayout from "@/_components/Home/Adminlayout";
+import { useFood } from "../_components/_hooks/use-foods";
 
 const AdminHomepage = () => {
+  // const { loading, categories, foods, reFetchCategories, reFetchFoods } =
+  //   useFood();
   return (
     <div className="bg-[#F4F4F5] max-w-[1440px]">
       <Adminlayout

@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import useFood from "../../Service/use-hook";
 
 const Dishinfo = ({
   refetchFoods,
@@ -56,6 +57,7 @@ const Dishinfo = ({
   const [price2, setPrice] = useState<number>(price);
   const [categorid, setCategorid] = useState<string>(_id);
   const [ingredients2, setIngredients] = useState<string>(ingredients);
+  const { categories } = useFood();
   const newform = new FormData();
 
   newform.append("name", name2);
@@ -94,25 +96,7 @@ const Dishinfo = ({
     await getDishes();
     alert("Food Edited successfully!");
   };
-  const [categories, setCategories] = useState<Category[]>([]);
-  type Category = {
-    _id: string;
-    name: string;
-  };
 
-  const getCategories = async () => {
-    const result = await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories"
-    );
-    const responseData = await result.json();
-
-    const { data } = responseData;
-
-    setCategories(data);
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
   const handleonselect = (value: string) => {
     setCategorid(value);
   };

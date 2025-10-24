@@ -1,13 +1,17 @@
-export type FoodType = {
-  _id?: string;
-  name: string;
-  price: number;
-  ingredients: string;
-  imageUrl: string;
-  categoryId: CategoryType;
-};
-
-export type CategoryType = {
-  name: string;
+export type categoryidType = {
   _id: string;
+  name: string;
+};
+export type Dish = {
+  name: string;
+  ingredients: string;
+  price: number;
+  category: string;
+  image: string;
+  _id: string;
+  categorid: categoryidType;
+};
+export type Category = {
+  _id: string;
+  name: string;
 };

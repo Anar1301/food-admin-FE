@@ -12,20 +12,11 @@ import {
 import { Input } from "@/_components/ui/input";
 import { Label } from "@/_components/ui/label";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 
 export function DialogCategory() {
   const [newName, setNewName] = useState("");
-  type Category = {
-    _id: string;
-    name: string;
-  };
 
-  const [newCategory, setNewCategory] = useState<string | undefined>();
-
-  const newCategoryNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewCategory(e.target.value);
-  };
   const createCategoryHandler = async () => {
     await fetch("http://localhost:4000/api/categories", {
       method: "POST",

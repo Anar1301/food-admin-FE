@@ -16,7 +16,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Button } from "../ui/button";
 import { FaTrashCan } from "react-icons/fa6";
 import { SelectDemo } from "./Select";
-import { useEffect, useState } from "react";
+import useFood from "../../Service/use-hook";
 
 const Foodcontainer = ({
   title,
@@ -31,41 +31,8 @@ const Foodcontainer = ({
   image: string;
   comment: string;
 }) => {
-  type Dish = {
-    name: string;
-    ingredients: string;
-    price: number;
-    category: string;
-    image: string;
-    id: string;
-  };
-  const [dishes, setDishes] = useState<Dish[]>([]);
-  const getDishes = async () => {
-    const result = await fetch("http://localhost:4000/api/food");
-    const responseData = await result.json();
-    console.log({ responseData });
-    const { data } = responseData;
-    console.log(data);
+  const { Deletefoodinfo } = useFood();
 
-    setDishes(data);
-  };
-  useEffect(() => {
-    getDishes();
-  }, []);
-  const Deletefoodinfo = async (id: string) => {
-    confirm("Are you sure ?");
-    await fetch("http://localhost:4000/api/food/delete", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-      }),
-    });
-    await getDishes();
-  };
   return (
     <div className="w-[270px] mt-[20px] border-2 rounded-md">
       <div className="card bg-[#FFFFFF] h-[240px] shadow-sm items-center">

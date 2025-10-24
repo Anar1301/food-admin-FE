@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-
 import Ordercomp from "./Ordercomp";
 import { Button } from "../ui/button";
 import {
@@ -13,105 +11,23 @@ import {
 } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import useFood from "../../Service/use-hook";
 
 const Alldishescategory = () => {
-  const [newName, setNewName] = useState("");
-  type categoryidType = {
-    _id: string;
-    name: string;
-  };
-  type Dish = {
-    name: string;
-    ingredients: string;
-    price: number;
-    category: string;
-    image: string;
-    _id: string;
-    categorid: categoryidType;
-  };
-
-  const [dishes, setDishes] = useState<Dish[]>([]);
-  const getDishes = async () => {
-    const result = await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/food"
-    );
-
-    const responseData = await result.json();
-
-    const { data } = responseData;
-    console.log({ responseData });
-
-    setDishes(data);
-  };
-  useEffect(() => {
-    getDishes();
-  }, []);
-
-  const createCategoryHandler = async () => {
-    await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories",
-      {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: newName,
-        }),
-      }
-    );
-    await getCategories();
-  };
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [filtered, setFiltered] = useState<Category[]>([]);
-  const [status, setStatus] = useState<boolean>(false);
-  const [red, setRed] = useState<string>("ulaan");
-
-  type Category = {
-    _id: string;
-    name: string;
-  };
-
-  const getCategories = async () => {
-    const result = await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/categories"
-    );
-    const responseData = await result.json();
-
-    const { data } = responseData;
-    console.log({ responseData });
-
-    setCategories(data);
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  const Deletebutton = async (id: string) => {
-    if (confirm("Are you sure ?")) {
-      await fetch(
-        "https://food-delivery-frontend-client-n86m.vercel.app/api/categories/delete",
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            _id: id,
-          }),
-        }
-      );
-      await getCategories();
-    }
-  };
-  function filteredcat(categorid: string) {
-    const filteredcategory = categories.filter((e) => e._id === categorid);
-    setFiltered(filteredcategory);
-
-    setStatus(true);
-  }
+  const {
+    setStatus,
+    setFiltered,
+    getCategories,
+    categories,
+    Deletebutton,
+    dishes,
+    filteredcat,
+    filtered,
+    newName,
+    setNewName,
+    createCategoryHandler,
+    status,
+  } = useFood();
 
   return (
     <div>
@@ -123,10 +39,7 @@ const Alldishescategory = () => {
 
           <div className="mt-[16px] flex gap-2">
             <Button
-              className={
-                `bg-white text-black rounded-full border-1 border-black ` +
-                `${status ? " !border-black" : " !border-red-400"}`
-              }
+              className={`bg-white text-black rounded-full border-1 border-black `}
               onClick={() => (setFiltered(categories), setStatus(!true))}
             >
               All categories
@@ -137,10 +50,7 @@ const Alldishescategory = () => {
             {categories.map((category, index) => (
               <Button
                 onClick={() => (filteredcat(category._id), setStatus(!false))}
-                className={
-                  `bg-white text-black rounded-full border-1 border-black ` +
-                  `${red === "ulaan" ? " !border-red-500" : " !border-black"}`
-                }
+                className={`bg-white text-black rounded-full border-1 border-black `}
                 key={index}
               >
                 {category.name}

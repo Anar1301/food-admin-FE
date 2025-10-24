@@ -1,22 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
 
 import { DialogDemo } from "./Dialog";
 
 import Dishinfo from "./Dishinfo";
-type categoryidType = {
-  _id: string;
-  name: string;
-};
-type Dish = {
-  name: string;
-  ingredients: string;
-  price: number;
-  category: string;
-  image: string;
-  _id: string;
-  categorid: categoryidType;
-};
+import { Dish } from "@/lib/types";
+import useFood from "../../Service/use-hook";
 
 const Ordercomp = ({
   dishes2,
@@ -28,38 +16,7 @@ const Ordercomp = ({
   getCategories: Function;
   dishes2: Dish[];
 }) => {
-  const [dishes, setDishes] = useState<Dish[]>([]);
-  const getDishes = async () => {
-    const result = await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/food"
-    );
-    const responseData = await result.json();
-
-    const { data } = responseData;
-
-    setDishes(data);
-  };
-  useEffect(() => {
-    getDishes();
-  }, []);
-  const Deletefoodinfo = async (id: string) => {
-    confirm("Are you sure ?");
-    await fetch(
-      "https://food-delivery-frontend-client-n86m.vercel.app/api/food/delete",
-      {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: id,
-        }),
-      }
-    );
-    await getDishes();
-  };
-  console.log("category", dishes);
+  const { getDishes, Deletefoodinfo } = useFood();
   return (
     <div>
       <div className="bg-[#FFFFFF] mt-[24px] ml-[24px] max-w-[1440px] ">
